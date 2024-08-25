@@ -1,0 +1,68 @@
+---
+import Tester from '../components/Tester.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="New line =&gt; space or truncated?">
+	<main>
+		<h1>New line =&gt; space or truncated?</h1>
+		<h2>Let's test now!</h2>
+		<Tester client:load />
+		<h2>What's this?</h2>
+		<p>
+			This site is created to test what kind of characters the current browser truncates a newline between. <a href="https://drafts.csswg.org/css-text-4/#line-break-transform" target="_blank">The CSS specification</a> discourages browsers from converting newline between Chinese or Japanese characters to space.
+		</p>
+		<blockquote lang="zh-TW">
+			這個段落是那麼長，<br/>
+			在一行寫不行。最好<br/>
+			用三行寫。
+		</blockquote>
+		<p>The above text must be “<span lang="zh-TW">這個段落是那麼長，在一行寫不行。最好用三行寫。</span>”.</p>
+		<p>
+			You can access to check test cases <a href="https://wpt.fyi/results/css/css-text/line-breaking?label=experimental&label=master&aligned&q=segment-break-transformation-rules-" target="_blank">here</a>. Those only Firefox passes are what we are discussing.
+		</p>
+		<h2>How should I use this?</h2>
+		<p>Once you press “Go”, The following two text will be generated and compared their rendered widths:</p>
+		<ul>
+			<li>[Target Character][LF][Parner Character]</li>
+			<li>[Target Character][Parner Character]</li>
+		</ul>
+		<p>[LF] means a newline. The every character in the range U+2E80–U+1FFF is checked as “[Target Character]”, and “[Partner Character]” can be one of:</p>
+		<ul>
+			<li>[Target Character] (when you choose “Same character”)</li>
+			<li>Han (set as “測”)</li>
+			<li>Fullwidth Alphabet (set as “Ｆ”)</li>
+			<li>Halfwidth Katakana (set as “<span lang="ja">ﾃ</span>”)</li>
+			<li>Hangul (set as “<span lang="ko">테</span>”)</li>
+			<li>Alphabet (set as “n”)</li>
+		</ul>
+		<p>The result shows what characters truncate a newline next to them. Ideally, only a newline between Chinese or Japanese characters should be truncated. Note that Korean characters behave like Halfwidth alphabets.</p>
+		<h2>What browser should I use?</h2>
+		<p>If the browser assert that it supports this feature, you can use it. Firefox has supported it for a long time.</p>
+		<p>You can check the bug tracker of Chromium (Chrome) and WebKit (Safari) in:</p>
+		<ul>
+			<li>Chromium: <a href="https://issues.chromium.org/issues/40069685" target="_blank">#1</a> / <a href="https://issues.chromium.org/issues/40774934" target="_blank">#2</a></li>
+			<li><a href="https://bugs.webkit.org/show_bug.cgi?id=260857" target="_blank">WebKit</a></li>
+		</ul>
+		<h2>Resources</h2>
+		<p><a href="https://github.com/tats-u/cj-newline-test">Repository (GitHub)</a></p>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+</style>

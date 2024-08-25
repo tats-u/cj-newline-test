@@ -1,0 +1,71 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+<style is:global>
+	:root {
+		--accent: 136, 58, 234;
+		--accent-light: 224, 204, 250;
+		--accent-dark: 49, 10, 101;
+		--accent-gradient: linear-gradient(
+			45deg,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%,
+			white 60%
+		);
+	}
+	html {
+		font-family: sans-serif;
+	}
+	@media (prefers-color-scheme: dark) {
+		html {
+			background-color: #111;
+			color: white;
+		}
+		a {
+			color: #66f;
+		}
+		a:visited {
+			color: #f3f;
+		}
+		a:hover {
+			color: #f3f;
+		}
+	}
+	code {
+		font-family:
+			Menlo,
+			Monaco,
+			Lucida Console,
+			Liberation Mono,
+			DejaVu Sans Mono,
+			Bitstream Vera Sans Mono,
+			Courier New,
+			monospace;
+	}
+
+	@font-face {
+		font-family: "Ahem";
+		src: url("https://cdn.jsdelivr.net/gh/Kozea/Ahem/Ahem.ttf") format("truetype");
+		font-weight: 100 900;
+		font-display: swap;
+	}
+</style>

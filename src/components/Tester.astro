@@ -1,0 +1,105 @@
+---
+
+---
+<div>
+	<div class="panel">
+		<label for="second-type">Partner Character Type:</label>
+		<select
+			name="second-type"
+			value="same"
+			id="second-type"
+		>
+			<option value="same">Same character</option>
+			<option value="han">Han</option>
+			<option value="full-alpha">Fullwidth Alphabet</option>
+			<option value="half-katakana">Halfwidth Katakana</option>
+			<option value="hangul">Hangul</option>
+			<option value="alpha">Alphabet</option>
+		</select>
+		<button type="button" onclick="runTest()" id="go-button">
+			Go
+		</button>
+	</div>
+	<div id="test-area" style={{ fontFamily: "Ahem, sans-serif" }}>
+			<span id="with-new-line"></span><br/>
+			<span id="without-new-line"></span>
+	</div>
+	<pre id="result"></pre>
+</div>
+<script is:inline>
+const targetCharMap = new Map([
+	["han", "測"],
+	["full-alpha", "Ｆ"],
+	["half-katakana", "ﾃ"],
+	["hangul", "테"],
+	["alpha", "n"],
+]);
+
+function codepointToUPlus(codepoint) {
+	return `U+${codepoint.toString(16).toUpperCase().padStart(4, "0")}`;
+}
+
+function runTest() {
+	const selectedValue = document.getElementById("second-type").value;
+	const selectedPairCharBase = targetCharMap.get(selectedValue) ?? null;
+	/** @type {number | null} */
+	let rangeStart = null;
+	/** @type {[number, number][] | null} */
+	const truncateNewlineRange = [];
+
+	for(let i = 0x2e80; i <= 0x1_ffff; i++) {
+		// Skip surronding pairs
+		if(i >= 0xd800 && i <= 0xdfff) {
+			i = 0xdffff; // Consider i++
+			continue;
+		}
+		const testChar = String.fromCodePoint(i);
+		const pairChar = selectedPairCharBase ?? testChar;
+		
+		document.getElementById("without-new-line").innerHTML = `${testChar}${pairChar}`;
+		document.getElementById("with-new-line").innerHTML = `${testChar}\n${pairChar}`;
+		
+		const withoutNewLineDom = document.getElementById("without-new-line");
+		const widthWithoutNewLine = withoutNewLineDom.getBoundingClientRect().width;
+		const widthWithNewLine = document.getElementById("with-new-line").getBoundingClientRect().width;
+		const height = withoutNewLineDom.getBoundingClientRect().height;
+		const relativeDifference = Math.abs(widthWithNewLine - widthWithoutNewLine) / height;
+		const newlineToSpace = relativeDifference > 0.1;
+
+		if (newlineToSpace) {
+			if (rangeStart !== null) {
+				truncateNewlineRange.push([rangeStart, i - 1]);
+				rangeStart = null;
+			}
+		} else if (rangeStart === null) {
+			rangeStart = i;
+		}
+	}
+
+	if (rangeStart !== null) {
+		truncateNewlineRange.push([rangeStart, 0x1ffff]);
+	}
+	document.getElementById("without-new-line").innerHTML = "";
+	document.getElementById("with-new-line").innerHTML = "";
+	document.getElementById("result").innerText = truncateNewlineRange.length === 0 ?
+		  "(Newline next to all characters is converted to space)"
+		: `Newline next to the following characters is truncated instead of converted to space.\n\n${truncateNewlineRange
+		.map(([start, end]) => `- ${start === end ? codepointToUPlus(start) : `${codepointToUPlus(start)}–${codepointToUPlus(end)}`}`)
+		.join("\n")}`;
+}
+</script>
+<style>
+	#go-button, #second-type {
+		padding: 0.5em;
+		font-size: 1em;
+	}
+	#go-button {
+		padding-inline: 1em;
+	}
+	.panel {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 1em;
+	}
+</style>
