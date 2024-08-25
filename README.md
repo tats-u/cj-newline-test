@@ -54,4 +54,28 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
+## Result in Firefox
 
+Version 129, Same Character
+
+A newline is truncated if surrounded by the following characters:
+
+- U+2E80–U+2E99
+- U+2E9B–U+2EF3
+- U+2F00–U+2FD5
+- U+2FF0–U+2FFB
+- U+3000–U+302D
+- U+3031–U+303C
+- U+303E
+- U+3041–U+3096
+- U+3099–U+30FF
+- U+3105–U+312F
+- U+3190–U+31E3
+- U+31F0–U+31FF
+- U+3220–U+3247
+- U+3250–U+325F
+- U+327F–U+3296
+- U+3298
+- U+329A–U+4DBF
+- U+4E00–U+A48C
+- U+A490–U+A4C6
