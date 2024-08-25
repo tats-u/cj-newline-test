@@ -1,6 +1,6 @@
 # Newline => space or truncated?
 
-https://tats-u.github.com/cj-newline-test/
+https://tats-u.github.io/cj-newline-test/
 
 ## What's this?
 
