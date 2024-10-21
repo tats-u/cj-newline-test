@@ -56,7 +56,7 @@ All commands are run from the root of the project, from a terminal:
 
 ## Result in Firefox
 
-Version 129, Same Character
+Version 131, Same Character
 
 A newline is truncated if surrounded by the following characters:
 
@@ -79,3 +79,32 @@ A newline is truncated if surrounded by the following characters:
 - U+329A–U+4DBF
 - U+4E00–U+A48C
 - U+A490–U+A4C6
+- U+F900–U+FAFF
+- U+FE10–U+FE19
+- U+FE30–U+FE52
+- U+FE54–U+FE66
+- U+FE68–U+FE6B
+- U+FF01–U+FF9F
+- U+FFE0–U+FFE6
+- U+FFE8–U+FFEE
+- U+16FE0–U+16FE4
+- U+16FF0–U+16FF1
+- U+17000–U+187F7
+- U+18800–U+18CD5
+- U+18D00–U+18D08
+- U+1AFF0–U+1AFF3
+- U+1AFF5–U+1AFFB
+- U+1AFFD–U+1AFFE
+- U+1B000–U+1B122
+- U+1B132
+- U+1B150–U+1B152
+- U+1B155
+- U+1B164–U+1B167
+- U+1B170–U+1B2FB
+- U+1F200
+- U+1F210–U+1F219
+- U+1F21B–U+1F22E
+- U+1F230–U+1F231
+- U+1F23B
+- U+1F240–U+1F248
+- U+1F260–U+1F265
