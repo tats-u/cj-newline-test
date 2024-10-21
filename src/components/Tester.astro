@@ -42,10 +42,8 @@ function codepointToUPlus(codepoint: number) {
 function runTest() {
 	const selectedValue = (document.getElementById("second-type")! as HTMLSelectElement).value;
 	const selectedPairCharBase = targetCharMap.get(selectedValue) ?? null;
-	/** @type {number | null} */
-	let rangeStart = null;
-	/** @type {[number, number][] | null} */
-	const truncateNewlineRange = [];
+	let rangeStart: number | null = null;
+	const truncateNewlineRange: [number, number][] | null = [];
 
 	for(let i = 0x2e80; i <= 0x1_ffff; i++) {
 		// Skip surronding pairs
