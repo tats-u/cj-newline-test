@@ -16,7 +16,7 @@
 			<option value="hangul">Hangul</option>
 			<option value="alpha">Alphabet</option>
 		</select>
-		<button type="button" onclick="runTest()" id="go-button">
+		<button type="button" id="go-button">
 			Go
 		</button>
 	</div>
@@ -26,7 +26,7 @@
 	</div>
 	<pre id="result"></pre>
 </div>
-<script is:inline>
+<script>
 const targetCharMap = new Map([
 	["han", "測"],
 	["full-alpha", "Ｆ"],
@@ -87,6 +87,7 @@ function runTest() {
 		.map(([start, end]) => `- ${start === end ? codepointToUPlus(start) : `${codepointToUPlus(start)}–${codepointToUPlus(end)}`}`)
 		.join("\n")}`;
 }
+document.getElementById("go-button").addEventListener("click", runTest);
 </script>
 <style>
 	#go-button, #second-type {
