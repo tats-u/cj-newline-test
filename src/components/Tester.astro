@@ -35,12 +35,12 @@ const targetCharMap = new Map([
 	["alpha", "n"],
 ]);
 
-function codepointToUPlus(codepoint) {
+function codepointToUPlus(codepoint: number) {
 	return `U+${codepoint.toString(16).toUpperCase().padStart(4, "0")}`;
 }
 
 function runTest() {
-	const selectedValue = document.getElementById("second-type").value;
+	const selectedValue = (document.getElementById("second-type")! as HTMLSelectElement).value;
 	const selectedPairCharBase = targetCharMap.get(selectedValue) ?? null;
 	/** @type {number | null} */
 	let rangeStart = null;
@@ -56,12 +56,12 @@ function runTest() {
 		const testChar = String.fromCodePoint(i);
 		const pairChar = selectedPairCharBase ?? testChar;
 		
-		document.getElementById("without-new-line").innerHTML = `${testChar}${pairChar}`;
-		document.getElementById("with-new-line").innerHTML = `${testChar}\n${pairChar}`;
+		document.getElementById("without-new-line")!.innerHTML = `${testChar}${pairChar}`;
+		document.getElementById("with-new-line")!.innerHTML = `${testChar}\n${pairChar}`;
 		
-		const withoutNewLineDom = document.getElementById("without-new-line");
+		const withoutNewLineDom = document.getElementById("without-new-line")!;
 		const widthWithoutNewLine = withoutNewLineDom.getBoundingClientRect().width;
-		const widthWithNewLine = document.getElementById("with-new-line").getBoundingClientRect().width;
+		const widthWithNewLine = document.getElementById("with-new-line")!.getBoundingClientRect().width;
 		const height = withoutNewLineDom.getBoundingClientRect().height;
 		const relativeDifference = Math.abs(widthWithNewLine - widthWithoutNewLine) / height;
 		const newlineToSpace = relativeDifference > 0.1;
@@ -79,15 +79,15 @@ function runTest() {
 	if (rangeStart !== null) {
 		truncateNewlineRange.push([rangeStart, 0x1ffff]);
 	}
-	document.getElementById("without-new-line").innerHTML = "";
-	document.getElementById("with-new-line").innerHTML = "";
-	document.getElementById("result").innerText = truncateNewlineRange.length === 0 ?
+	document.getElementById("without-new-line")!.innerHTML = "";
+	document.getElementById("with-new-line")!.innerHTML = "";
+	document.getElementById("result")!.innerText = truncateNewlineRange.length === 0 ?
 		  "(Newline next to all characters is converted to space)"
 		: `Newline next to the following characters is truncated instead of converted to space.\n\n${truncateNewlineRange
 		.map(([start, end]) => `- ${start === end ? codepointToUPlus(start) : `${codepointToUPlus(start)}–${codepointToUPlus(end)}`}`)
 		.join("\n")}`;
 }
-document.getElementById("go-button").addEventListener("click", runTest);
+document.getElementById("go-button")!.addEventListener("click", runTest);
 </script>
 <style>
 	#go-button, #second-type {
