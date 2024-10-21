@@ -50,7 +50,7 @@ function runTest() {
 	for(let i = 0x2e80; i <= 0x1_ffff; i++) {
 		// Skip surronding pairs
 		if(i >= 0xd800 && i <= 0xdfff) {
-			i = 0xdffff; // Consider i++
+			i = 0xdfff; // Consider i++
 			continue;
 		}
 		const testChar = String.fromCodePoint(i);
